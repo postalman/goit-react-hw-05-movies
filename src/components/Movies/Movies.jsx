@@ -6,7 +6,7 @@ const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearchInputChange = (event) => {
+  const handleSearchInputChange = event => {
     setSearchQuery(event.target.value);
   };
 
@@ -25,7 +25,7 @@ const Movies = () => {
   return (
     <div>
       <h2>Search Movies</h2>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={e => e.preventDefault()}>
         <input
           type="text"
           placeholder="Search"
@@ -37,7 +37,7 @@ const Movies = () => {
         </button>
       </form>
       <ul>
-        {searchResults.map((movie) => (
+        {searchResults.map(movie => (
           <li key={movie.id}>
             <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
           </li>
