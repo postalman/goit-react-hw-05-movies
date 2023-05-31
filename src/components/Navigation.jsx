@@ -1,18 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { StyledNavigation, StyledNavigationUl, StyledLink } from './Navigation.styled'
 
 const Navigation = () => {
   return (
-    <nav>
-      <ul>
+    <StyledNavigation>
+      <StyledNavigationUl>
         <li>
-          <Link to="/">Home</Link>
+          <StyledLink to="/">Home</StyledLink>
         </li>
         <li>
-          <Link to="/movies">Movies</Link>
+          <StyledLink to="/movies">Movies</StyledLink>
         </li>
-      </ul>
-    </nav>
+      </StyledNavigationUl>
+    </StyledNavigation>
   );
 };
 

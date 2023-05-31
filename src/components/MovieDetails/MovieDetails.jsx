@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy } from 'react';
 import { useParams, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { StyledLink } from '../MovieDetails/MovieDetails.styled'
 
 const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
@@ -53,7 +54,7 @@ const MovieDetails = () => {
   return (
     <div>
       <div>
-        <Link to="/" onClick={goBack}>Go back</Link>
+        <button onClick={goBack}>Go back</button>
       </div>
 
       <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} />
@@ -67,10 +68,10 @@ const MovieDetails = () => {
         <p>Additional Information:</p>
         <ul>
           <li>
-            <Link to={`/movie/${movieId}/cast`}>Cast</Link>
+            <StyledLink to={`/movie/${movieId}/cast`}>Cast</StyledLink>
           </li>
           <li>
-            <Link to={`/movie/${movieId}/reviews`}>Reviews</Link>
+            <StyledLink to={`/movie/${movieId}/reviews`}>Reviews</StyledLink>
           </li>
         </ul>
       </div>
