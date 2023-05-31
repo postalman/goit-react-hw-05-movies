@@ -1,6 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { StyledNavigation, StyledNavigationUl, StyledLink } from './Navigation.styled'
+
+import {
+  StyledNavigation,
+  StyledNavigationUl,
+  StyledLink,
+} from './Navigation.styled';
 
 const Navigation = () => {
   return (

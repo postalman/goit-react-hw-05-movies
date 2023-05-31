@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const Reviews = () => {
-  const { movieId } = useParams();
+const Reviews = ({movieId}) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,7 @@ const Reviews = () => {
         <ul>
           {reviews.map(review => (
             <li key={review.id}>
-              <p>{review.author}</p>
+              <h3>Author: {review.author}</h3>
               <p>{review.content}</p>
             </li>
           ))}
@@ -41,3 +40,7 @@ const Reviews = () => {
 };
 
 export default Reviews;
+
+Reviews.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, lazy } from 'react';
-import { useParams, Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { StyledLink } from '../MovieDetails/MovieDetails.styled'
+import { StyledLink, StyledContainer, StyledDivMargin, StyledImg, StyledInfo, StyledBtn } from '../MovieDetails/MovieDetails.styled'
 
 const Cast = lazy(() => import('../Cast/Cast'));
 const Reviews = lazy(() => import('../Reviews/Reviews'));
@@ -15,6 +15,7 @@ const MovieDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // console.log(movie);
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
@@ -27,7 +28,7 @@ const MovieDetails = () => {
         setError(error.message);
       }
     };
-
+    
     fetchMovieDetails();
   }, [movieId]);
 
@@ -54,17 +55,23 @@ const MovieDetails = () => {
   return (
     <div>
       <div>
-        <button onClick={goBack}>Go back</button>
+        <StyledBtn onClick={goBack}>Go back</StyledBtn>
       </div>
+      <StyledContainer>
+        <div>
+          <StyledImg src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} />
+        </div>
+        <StyledDivMargin>
+          <h2>{title} ({release_date.substring(0, 4)})</h2>
+          <p>User Score: {vote_average} %</p>
+          <h3>Overview</h3>
+          <p>{overview}</p>
+          <h3>Genres</h3>
+          <p>{genres.map(genre => genre.name).join(', ')}</p>
+        </StyledDivMargin>
+      </StyledContainer>
 
-      <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} />
-      <h2>{title}</h2>
-      <p>Year: {release_date.substring(0, 4)}</p>
-      <p>User Score: {vote_average} %</p>
-      <p>Overview: {overview}</p>
-      <p>Genres: {genres.map(genre => genre.name).join(', ')}</p>
-
-      <div>
+      <StyledInfo>
         <p>Additional Information:</p>
         <ul>
           <li>
@@ -74,17 +81,17 @@ const MovieDetails = () => {
             <StyledLink to={`/movie/${movieId}/reviews`}>Reviews</StyledLink>
           </li>
         </ul>
-      </div>
+      </StyledInfo>
 
       {showCast && !showReviews && (
         <>
-          <Cast />
+          <Cast movieId={movieId} />
         </>
       )}
 
       {showReviews && !showCast && (
         <>
-          <Reviews />
+          <Reviews movieId={movieId} />
         </>
       )}
 
