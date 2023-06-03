@@ -31,10 +31,9 @@ const Movies = () => {
     fetchMovies(query);
   };
 
-  const handleMovieClick = (movie) => {
-    navigate(`/movies/${movie.id}`, { state: { from: location.pathname, query } });
-  };
+  
 
+console.log(location.state);
   return (
     <div>
       <h1>Search Movies</h1>
@@ -49,7 +48,7 @@ const Movies = () => {
       <ul>
         {movies.map((movie) => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} onClick={() => handleMovieClick(movie)}>
+            <Link to={`/movies/${movie.id}`} state={{ from: location.pathname + location.search }}>
               {movie.title}
             </Link>
           </li>

@@ -1,11 +1,12 @@
 import React, { useEffect, useState  } from 'react';
-import { useParams, Outlet, useNavigate  } from 'react-router-dom';
+import { useParams, Outlet, useNavigate, useLocation  } from 'react-router-dom';
 import axios from 'axios';
 import { StyledLink, StyledContainer, StyledDivMargin, StyledImg, StyledInfo, StyledBtn } from '../MovieDetails/MovieDetails.styled'
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,10 +22,13 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [movieId]);
 
-    const handleGoBack = () => {
-    navigate(-2);
-  };
+  //   const handleGoBack = () => {
+  //   navigate(-2);
+  // };
   
+  const handleGoBack = () => {
+    navigate(location.state.from);
+  };
 
   if (!movie) {
     return <div>Loading...</div>;
