@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
+  
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -16,14 +18,19 @@ const Home = () => {
 
     fetchMovies();
   }, []);
-
+  console.log(location);
   return (
     <div>
       <h2>Trending today</h2>
       <ul>
         {movies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`}>{movie.title}</Link>
+            <Link
+              to={`/movies/${movie.id}`}
+              state={{ from: location.pathname }}
+            >
+              {movie.title}
+            </Link>
           </li>
         ))}
       </ul>
