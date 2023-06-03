@@ -2,6 +2,7 @@ import React, { useEffect, useState  } from 'react';
 import { useParams, Outlet, useNavigate, useLocation  } from 'react-router-dom';
 import axios from 'axios';
 import { StyledLink, StyledContainer, StyledDivMargin, StyledImg, StyledInfo, StyledBtn,  } from '../MovieDetails/MovieDetails.styled'
+import PropTypes from 'prop-types';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -70,6 +71,10 @@ const MovieDetails = () => {
 };
 
 export default MovieDetails;
+
+MovieDetails.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};
 
 
 

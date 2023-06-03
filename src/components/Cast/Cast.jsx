@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { StyledImg } from './Cast.styled';
+import PropTypes from 'prop-types';
 
 const Cast = () => {
   const { movieId } = useParams();
@@ -44,3 +45,7 @@ const Cast = () => {
 };
 
 export default Cast;
+
+Cast.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home/Home';
 import Movies from './Movies/Movies';
 import MovieDetails from './MovieDetails/MovieDetails';

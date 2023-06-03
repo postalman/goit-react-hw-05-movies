@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const Movies = () => {
   const [query, setQuery] = useState('');
@@ -64,3 +65,7 @@ const Movies = () => {
 };
 
 export default Movies;
+
+Movies.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};
