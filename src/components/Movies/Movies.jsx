@@ -1,45 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 
 const Movies = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleSearchInputChange = event => {
-    setSearchQuery(event.target.value);
+  useEffect(() => {
+    const savedQuery = searchParams.get('query') || '';
+    if (savedQuery) {
+      setQuery(savedQuery);
+      fetchMovies(savedQuery);
+    }
+  }, [searchParams]);
+
+  const fetchMovies = async (searchQuery) => {
+    const apiKey = '4b5f3337782451842d3d2458bd4af72e';
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
+    );
+    setMovies(response.data.results);
   };
 
-  const handleSearch = async () => {
-    try {
-      const apiKey = '4b5f3337782451842d3d2458bd4af72e';
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
-      );
-      setSearchResults(response.data.results);
-    } catch (error) {
-      console.log('Error searching movies:', error);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/movies?query=${query}`);
+    fetchMovies(query);
+  };
+
+  const handleMovieClick = (movie) => {
+    navigate(`/movies/${movie.id}`, { state: { from: location.pathname, query } });
   };
 
   return (
     <div>
-      <h2>Search Movies</h2>
-      <form onSubmit={e => e.preventDefault()}>
+      <h1>Search Movies</h1>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Search"
-          value={searchQuery}
-          onChange={handleSearchInputChange}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <button type="submit" onClick={handleSearch}>
-          Search
-        </button>
+        <button type="submit">Search</button>
       </form>
       <ul>
-        {searchResults.map(movie => (
+        {movies.map((movie) => (
           <li key={movie.id}>
-            <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+            <Link to={`/movies/${movie.id}`} onClick={() => handleMovieClick(movie)}>
+              {movie.title}
+            </Link>
           </li>
         ))}
       </ul>
@@ -48,3 +60,8 @@ const Movies = () => {
 };
 
 export default Movies;
+
+
+
+
+
