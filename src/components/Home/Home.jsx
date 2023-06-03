@@ -42,5 +42,5 @@ const Home = () => {
 export default Home;
 
 Home.propTypes = {
-  location: PropTypes.object.isRequired,
+  location: PropTypes.object,
 };

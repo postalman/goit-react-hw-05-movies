@@ -47,5 +47,5 @@ const Cast = () => {
 export default Cast;
 
 Cast.propTypes = {
-  movieId: PropTypes.string.isRequired,
+  movieId: PropTypes.string,
 };

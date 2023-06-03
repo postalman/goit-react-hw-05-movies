@@ -11,17 +11,25 @@ import PropTypes from 'prop-types';
 const Movies = () => {
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.pathname === '/movies') {
+      setQuery('');
+    }
+  }, [location]);
 
   useEffect(() => {
     const savedQuery = searchParams.get('query') || '';
     if (savedQuery) {
       setQuery(savedQuery);
       fetchMovies(savedQuery);
+    } else {
+      setMovies([]);
     }
-  }, [searchParams]);
+  }, [searchParams, setSearchParams]);
 
   const fetchMovies = async searchQuery => {
     const apiKey = '4b5f3337782451842d3d2458bd4af72e';
@@ -33,10 +41,17 @@ const Movies = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    navigate(`/movies?query=${query}`);
-    fetchMovies(query);
+    if (query.trim() !== '') {
+      const params = new URLSearchParams();
+      params.set('query', query);
+      setSearchParams(params);
+      navigate(`/movies?query=${query}`);
+      fetchMovies(query);
+    }
   };
 
+  console.log(query);
+  console.log(location);
   return (
     <div>
       <h1>Search Movies</h1>
@@ -51,10 +66,7 @@ const Movies = () => {
       <ul>
         {movies.map(movie => (
           <li key={movie.id}>
-            <Link
-              to={`/movies/${movie.id}`}
-              state={{ from: location.pathname + location.search }}
-            >
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
               {movie.title}
             </Link>
           </li>
@@ -67,5 +79,5 @@ const Movies = () => {
 export default Movies;
 
 Movies.propTypes = {
-  movieId: PropTypes.string.isRequired,
+  movieId: PropTypes.string,
 };
