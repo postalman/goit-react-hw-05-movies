@@ -27,6 +27,8 @@ export const StyledImg = styled.img`
 `
 
 export const StyledInfo = styled.div`
+    display:flex;
+    gap: 10px;
     padding-bottom: 10px;
     padding-top:10px;
     padding-left:10px;
@@ -43,3 +45,4 @@ export const StyledBtn = styled.button`
         margin-top:10px;
         margin-bottom: 10px;
 `
+

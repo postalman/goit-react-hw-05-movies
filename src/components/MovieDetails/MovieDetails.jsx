@@ -1,7 +1,7 @@
 import React, { useEffect, useState  } from 'react';
 import { useParams, Outlet, useNavigate, useLocation  } from 'react-router-dom';
 import axios from 'axios';
-import { StyledLink, StyledContainer, StyledDivMargin, StyledImg, StyledInfo, StyledBtn } from '../MovieDetails/MovieDetails.styled'
+import { StyledLink, StyledContainer, StyledDivMargin, StyledImg, StyledInfo, StyledBtn,  } from '../MovieDetails/MovieDetails.styled'
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -27,7 +27,13 @@ const MovieDetails = () => {
   // };
   
   const handleGoBack = () => {
-    navigate(location.state.from);
+    if (location.state && location.state.from) {
+      navigate(location.state.from)
+    } else {
+      navigate('/')
+    }
+    
+    
   };
 
   if (!movie) {
@@ -39,7 +45,7 @@ const MovieDetails = () => {
   return (
     <div key={movieId}>
         <div>
-            <button onClick={handleGoBack}>Go Back</button>
+            <StyledBtn onClick={handleGoBack}>Go Back</StyledBtn>
         </div>
         <StyledContainer>
         <div>
@@ -54,10 +60,10 @@ const MovieDetails = () => {
           <p>{genres.map(genre => genre.name).join(', ')}</p>
         </StyledDivMargin>
       </StyledContainer>
-      <div>
+      <StyledInfo>
         <StyledLink to={`/movies/${movieId}/cast`}>Cast</StyledLink>
         <StyledLink to={`/movies/${movieId}/reviews`}>Reviews</StyledLink>
-      </div>
+      </StyledInfo>
       <Outlet />
     </div>
   );
