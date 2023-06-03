@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  useSearchParams,
+  Link,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import axios from 'axios';
 
 const Movies = () => {
@@ -17,7 +22,7 @@ const Movies = () => {
     }
   }, [searchParams]);
 
-  const fetchMovies = async (searchQuery) => {
+  const fetchMovies = async searchQuery => {
     const apiKey = '4b5f3337782451842d3d2458bd4af72e';
     const response = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchQuery}`
@@ -25,15 +30,12 @@ const Movies = () => {
     setMovies(response.data.results);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     navigate(`/movies?query=${query}`);
     fetchMovies(query);
   };
 
-  
-
-console.log(location.state);
   return (
     <div>
       <h1>Search Movies</h1>
@@ -41,14 +43,17 @@ console.log(location.state);
         <input
           type="text"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
         />
         <button type="submit">Search</button>
       </form>
       <ul>
-        {movies.map((movie) => (
+        {movies.map(movie => (
           <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={{ from: location.pathname + location.search }}>
+            <Link
+              to={`/movies/${movie.id}`}
+              state={{ from: location.pathname + location.search }}
+            >
               {movie.title}
             </Link>
           </li>
@@ -59,8 +64,3 @@ console.log(location.state);
 };
 
 export default Movies;
-
-
-
-
-
