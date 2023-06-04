@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useSearchParams,
-  Link,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { useSearchParams, Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
@@ -13,7 +8,6 @@ const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === '/movies') {
@@ -45,7 +39,6 @@ const Movies = () => {
       const params = new URLSearchParams();
       params.set('query', query);
       setSearchParams(params);
-      navigate(`/movies?query=${query}`);
       fetchMovies(query);
     }
   };
